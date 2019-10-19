@@ -8,6 +8,10 @@ def print_list(some_list):
         print('   None')
 
 def print_to_do():
+    print('\n' * 10)
+    print('\n' * 10)
+    print('\n' * 10)
+    print('\n' * 10)
     print('Your To Do List:')
     print('')
     print('Top Priority')
@@ -52,8 +56,7 @@ except:
 
 print_to_do()
 while True:
-    time.sleep(1)
-    print('')
+    print('\n' * 15)
     print('Waiting for command')
     print('Enter \'help\' for list of commands')
     command = input()
