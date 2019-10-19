@@ -59,7 +59,6 @@ while True:
     command = input()
     if command == 'help':
         list_of_commands()
-        command = input()
     if command == 'add':
         print('Top priority? [y/n]')
         if input() == 'y':
