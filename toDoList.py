@@ -15,6 +15,7 @@ def print_to_do():
     print_list(additional)
 
 def list_of_commands():
+    print('')
     print('Add a task: \'add\'')
     print('Remove a task: \'remove\'')
     print('Motivational Quote: \'quote\'')
@@ -34,8 +35,10 @@ def remove(some_list):
 
 def quote():
     lines = open('quotes.txt').read().splitlines()
-    myline = random.choice(lines) 
+    myline = random.choice(lines)
+    time.sleep(1)
     print('\n\"' + myline + '\"')
+    time.sleep(4)
 
 top_priority = []
 
@@ -50,6 +53,7 @@ while True:
     print('Enter \'help\' for list of commands')
     command = input()
     if command == 'help':
+        time.sleep(1)
         list_of_commands()
         command = input()
     if command == 'add':
@@ -57,17 +61,21 @@ while True:
         if input() == 'y':
             add(top_priority)
             print_to_do()
+            time.sleep(2)
         else:
             add(additional)
             print_to_do()
+            time.sleep(2)
     if command == 'remove':
         print('Top priority? [y/n]')
         if input() == 'y':
             remove(top_priority)
             print_to_do()
+            time.sleep(2)
         else:
             remove(additional)
             print_to_do()
+            time.sleep(2)
     if command == 'quote':
         quote()
     if command == 'quit':
