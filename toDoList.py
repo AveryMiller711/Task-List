@@ -1,4 +1,5 @@
-import pickle, os, random, sys, time
+import os, random, sys, time, pickle
+os.system('clr')
 
 def print_list(some_list):
     for i in range(len(some_list)):
@@ -38,44 +39,45 @@ def quote():
     myline = random.choice(lines)
     time.sleep(1)
     print('\n\"' + myline + '\"')
-    time.sleep(4)
 
-top_priority = []
 
-additional = []
+try:
+    top_priority = pickle.load(open('top.dat', 'rb'))
+    additional = pickle.load(open('add.dat', 'rb'))
+except:
+    top_priority = []
+    additional = []
+    pickle.dump(top_priority, open('top.dat', 'wb'))
+    pickle.dump(additional, open('add.dat', 'wb'))
 
 print_to_do()
-
-
 while True:
+    time.sleep(1)
     print('')
     print('Waiting for command')
     print('Enter \'help\' for list of commands')
     command = input()
     if command == 'help':
-        time.sleep(1)
         list_of_commands()
         command = input()
     if command == 'add':
         print('Top priority? [y/n]')
         if input() == 'y':
             add(top_priority)
-            print_to_do()
-            time.sleep(2)
+            pickle.dump(top_priority, open('top.dat', 'wb'))
         else:
             add(additional)
-            print_to_do()
-            time.sleep(2)
+            pickle.dump(additional, open('add.dat', 'wb'))
+        print_to_do()
     if command == 'remove':
         print('Top priority? [y/n]')
         if input() == 'y':
             remove(top_priority)
-            print_to_do()
-            time.sleep(2)
+            pickle.dump(top_priority, open('top.dat', 'wb'))
         else:
             remove(additional)
-            print_to_do()
-            time.sleep(2)
+            pickle.dump(additional, open('add.dat', 'wb'))
+        print_to_do()
     if command == 'quote':
         quote()
     if command == 'quit':
