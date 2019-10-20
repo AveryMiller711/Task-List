@@ -12,19 +12,23 @@ def print_to_do():
     print('\n' * 10)
     print('\n' * 10)
     print('\n' * 10)
-    print('Your To Do List:')
+    print( name + '\'s' + ' To Do List:')
     print('')
     print('Top Priority')
     print_list(top_priority)
+    print('')
     print('Additional')
     print_list(additional)
 
 def list_of_commands():
     print('')
-    print('Add a task: \'add\'')
-    print('Remove a task: \'remove\'')
-    print('Motivational Quote: \'quote\'')
-    print('End Program: \'quit\'')
+    print(' ---------------------------')
+    print('|Print To Do List: \'list\'   |')
+    print('|Add a task: \'add\'          |')
+    print('|Remove a task: \'remove\'    |')
+    print('|Motivational Quote: \'quote\'|')
+    print('|End Program: \'quit\'        |')
+    print(' ---------------------------')
 
 def add(some_list):
     print('Enter the task to be added')
@@ -43,25 +47,38 @@ def quote():
     myline = random.choice(lines)
     time.sleep(1)
     print('\n\"' + myline + '\"')
-
+    
 
 try:
+    name = pickle.load(open('namesave.dat', 'rb'))
     top_priority = pickle.load(open('top.dat', 'rb'))
     additional = pickle.load(open('add.dat', 'rb'))
+    print('Welcome back ' + name + '!')
+    time.sleep(3)
 except:
     top_priority = []
     additional = []
     pickle.dump(top_priority, open('top.dat', 'wb'))
     pickle.dump(additional, open('add.dat', 'wb'))
+    print('Welcome to Task List! I don\'t believe we\'ve met.')
+    print('What should I call you?')
+    name = input()
+    pickle.dump(name, open('namesave.dat', 'wb'))
+    time.sleep(2)
+    print('It\'s nice to meet you ' + name + '!')
+    print('Let\'s get started!')
+    time.sleep(5)
 
 print_to_do()
 while True:
-    print('\n' * 15)
+    print('\n' * 10)
     print('Waiting for command')
     print('Enter \'help\' for list of commands')
     command = input()
     if command == 'help':
         list_of_commands()
+    if command == 'list':
+        print_to_do()
     if command == 'add':
         print('Top priority? [y/n]')
         if input() == 'y':
@@ -83,6 +100,8 @@ while True:
     if command == 'quote':
         quote()
     if command == 'quit':
+        print('Goodbye ' + name + '!')
+        time.sleep(3)
         sys.exit()
     
 
