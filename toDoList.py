@@ -22,25 +22,42 @@ def print_to_do():
 
 def list_of_commands():
     print('')
-    print(' ---------------------------')
-    print('|Print To Do List: \'list\'   |')
-    print('|Add a task: \'add\'          |')
-    print('|Remove a task: \'remove\'    |')
-    print('|Motivational Quote: \'quote\'|')
-    print('|End Program: \'quit\'        |')
-    print(' ---------------------------')
+    print(' ----------------------------')
+    print('|Print To Do List: \'list\'    |')
+    print('|Add a task: \'add\'           |')
+    print('|Remove a task: \'remove\'     |')
+    print('|Completed a task: \'complete\'|')
+    print('|Motivational Quote: \'quote\' |')
+    print('|End Program: \'quit\'         |')
+    print(' ----------------------------')
 
 def add(some_list):
     print('Enter the task to be added')
     new_task = input()
-    print('')
     return some_list.append(new_task)
 
 def remove(some_list):
-    print('Enter the number of the task to be removed')
-    removed_task = int(input())
-    print('')
-    return some_list.remove(some_list[removed_task - 1])
+    if len(some_list) == 0:
+        print('There\'s nothing to be removed')
+        time.sleep(3)
+    else:
+        print('Enter the number of the task to be removed')
+        removed_task = int(input())
+        return some_list.remove(some_list[removed_task - 1])
+
+def completed(some_list):
+    if len(some_list) == 0:
+        print('There\'s nothing to be completed')
+        time.sleep(3)
+    else:
+        print('Enter the number of the task completed')
+        removed_task = int(input())
+        if some_list == top_priority:
+            print('Yay! You completed top priority task number ' + str(removed_task) + '!')
+        else:
+            print('Yay! You completed additional task number ' + str(removed_task) + '!')
+        time.sleep(3)
+        return some_list.remove(some_list[removed_task - 1])
 
 def quote():
     lines = open('quotes.txt').read().splitlines()
@@ -80,7 +97,7 @@ while True:
     if command == 'list':
         print_to_do()
     if command == 'add':
-        print('Top priority? [y/n]')
+        print('Is it a top priority? [y/n]')
         if input() == 'y':
             add(top_priority)
             pickle.dump(top_priority, open('top.dat', 'wb'))
@@ -89,7 +106,7 @@ while True:
             pickle.dump(additional, open('add.dat', 'wb'))
         print_to_do()
     if command == 'remove':
-        print('Top priority? [y/n]')
+        print('Is it a top priority? [y/n]')
         if input() == 'y':
             remove(top_priority)
             pickle.dump(top_priority, open('top.dat', 'wb'))
@@ -97,11 +114,20 @@ while True:
             remove(additional)
             pickle.dump(additional, open('add.dat', 'wb'))
         print_to_do()
+    if command == 'complete':
+        print('Is it a top priority? [y/n]')
+        if input() == 'y':
+            completed(top_priority)
+            pickle.dump(top_priority, open('top.dat', 'wb'))
+        else:
+            completed(additional)
+            pickle.dump(additional, open('add.dat', 'wb'))
+        print_to_do()
     if command == 'quote':
         quote()
     if command == 'quit':
         print('Goodbye ' + name + '!')
-        time.sleep(3)
+        time.sleep(1)
         sys.exit()
     
 
