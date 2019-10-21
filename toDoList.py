@@ -94,9 +94,9 @@ while True:
     command = input()
     if command == 'help':
         list_of_commands()
-    if command == 'list':
+    elif command == 'list':
         print_to_do()
-    if command == 'add':
+    elif command == 'add':
         print('Is it a top priority? [y/n]')
         if input() == 'y':
             add(top_priority)
@@ -105,7 +105,7 @@ while True:
             add(additional)
             pickle.dump(additional, open('add.dat', 'wb'))
         print_to_do()
-    if command == 'remove':
+    elif command == 'remove':
         print('Is it a top priority? [y/n]')
         if input() == 'y':
             remove(top_priority)
@@ -114,7 +114,7 @@ while True:
             remove(additional)
             pickle.dump(additional, open('add.dat', 'wb'))
         print_to_do()
-    if command == 'complete':
+    elif command == 'complete':
         print('Is it a top priority? [y/n]')
         if input() == 'y':
             completed(top_priority)
@@ -123,11 +123,14 @@ while True:
             completed(additional)
             pickle.dump(additional, open('add.dat', 'wb'))
         print_to_do()
-    if command == 'quote':
+    elif command == 'quote':
         quote()
-    if command == 'quit':
+    elif command == 'quit':
         print('Goodbye ' + name + '!')
         time.sleep(1)
         sys.exit()
+    else:
+        print('Oops! There is no \'' + command + '\' command.')
+        time.sleep(2)
     
 
