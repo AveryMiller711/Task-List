@@ -22,14 +22,16 @@ def print_to_do():
 
 def list_of_commands():
     print('')
-    print(' ----------------------------')
-    print('|Print To Do List: \'list\'    |')
-    print('|Add a task: \'add\'           |')
-    print('|Remove a task: \'remove\'     |')
-    print('|Completed a task: \'complete\'|')
-    print('|Motivational Quote: \'quote\' |')
-    print('|End Program: \'quit\'         |')
-    print(' ----------------------------')
+    print(' --------------------------------------------------------------')
+    print('|Print To Do List: \'list\'                                      |')
+    print('|Add a task: \'add priority\\additional\'                         |')
+    print('|Remove a task: \'remove priority\\additional\'                   |')
+    print('|Complete a task: \'complete priority\\additional\'               |')
+    print('|Move a task: \'move priority\\additional to additional\\priority\'|')
+    print('|Edit a task: \'edit priority\\additional\'                       |')
+    print('|Motivational Quote: \'quote\'                                   |')
+    print('|End Program: \'quit\'                                           |')
+    print(' --------------------------------------------------------------')
 
 def add(some_list):
     print('Enter the task to be added')
@@ -58,6 +60,22 @@ def completed(some_list):
             print('Yay! You completed additional task number ' + str(removed_task) + '!')
         time.sleep(3)
         return some_list.remove(some_list[removed_task - 1])
+
+def move(start_list, end_list):
+    print('Enter the task number to move')
+    moved_task = int(input())
+    task = start_list[moved_task - 1]
+    return start_list.remove(task), end_list.append(task)
+
+def edit(some_list):
+    print('Enter the task number to edit')
+    task_index = int(input()) - 1
+    task = some_list[task_index]
+    print('Original task: ' + task)
+    print('Enter your edit:')
+    new_task = input()
+    some_list[task_index] = new_task
+    return some_list
 
 def quote():
     lines = open('quotes.txt').read().splitlines()
@@ -96,32 +114,47 @@ while True:
         list_of_commands()
     elif command == 'list':
         print_to_do()
-    elif command == 'add':
-        print('Is it a top priority? [y/n]')
-        if input() == 'y':
-            add(top_priority)
-            pickle.dump(top_priority, open('top.dat', 'wb'))
-        else:
-            add(additional)
-            pickle.dump(additional, open('add.dat', 'wb'))
+    elif command == 'add priority':
+        add(top_priority)
+        pickle.dump(top_priority, open('top.dat', 'wb'))
         print_to_do()
-    elif command == 'remove':
-        print('Is it a top priority? [y/n]')
-        if input() == 'y':
-            remove(top_priority)
-            pickle.dump(top_priority, open('top.dat', 'wb'))
-        else:
-            remove(additional)
-            pickle.dump(additional, open('add.dat', 'wb'))
+    elif command == 'add additional':
+        add(additional)
+        pickle.dump(additional, open('add.dat', 'wb'))
         print_to_do()
-    elif command == 'complete':
-        print('Is it a top priority? [y/n]')
-        if input() == 'y':
-            completed(top_priority)
-            pickle.dump(top_priority, open('top.dat', 'wb'))
-        else:
-            completed(additional)
-            pickle.dump(additional, open('add.dat', 'wb'))
+    elif command == 'remove priority':
+        remove(top_priority)
+        pickle.dump(top_priority, open('top.dat', 'wb'))
+        print_to_do()
+    elif command == 'remove additional':
+        remove(additional)
+        pickle.dump(additional, open('add.dat', 'wb'))
+        print_to_do()
+    elif command == 'complete priority':
+        completed(top_priority)
+        pickle.dump(top_priority, open('top.dat', 'wb'))
+        print_to_do()
+    elif command == 'complete additional':
+        completed(additional)
+        pickle.dump(additional, open('add.dat', 'wb'))
+        print_to_do()
+    elif command == 'move priority to additional':
+        move(top_priority, additional)
+        pickle.dump(top_priority, open('top.dat', 'wb'))
+        pickle.dump(additional, open('add.dat', 'wb'))
+        print_to_do()
+    elif command == 'move additional to priority':
+        move(additional, top_priority)
+        pickle.dump(top_priority, open('top.dat', 'wb'))
+        pickle.dump(additional, open('add.dat', 'wb'))
+        print_to_do()
+    elif command == 'edit priority':
+        edit(top_priority)
+        pickle.dump(top_priority, open('top.dat', 'wb'))
+        print_to_do()
+    elif command == 'edit additional':
+        edit(additional)
+        pickle.dump(additional, open('add.dat', 'wb'))
         print_to_do()
     elif command == 'quote':
         quote()
